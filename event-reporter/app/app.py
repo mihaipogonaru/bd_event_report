@@ -3,12 +3,12 @@ from flask import Flask, render_template, redirect, url_for
 from app.config import Config
 from app.assets import register_assets
 from app.extensions import (
-    db,
+    MongoDatabase,
     login_manager
 )
-from app.blueprints import manage_bp, rapports_bp
+from app.blueprints import event_bp, report_bp
 
-from app.models import User
+from app.models import User, Event
 
 
 def create_app(config_object=Config):
@@ -29,13 +29,19 @@ def create_app(config_object=Config):
 
 
 def register_blueprints(app):
-    app.register_blueprint(manage_bp)
-    app.register_blueprint(rapports_bp)
+    app.register_blueprint(event_bp)
+    app.register_blueprint(report_bp)
 
 
 def register_extensions(app):
-    db.set_session_read_commited()
+    MongoDatabase.mongodb.init_app(app)
     login_manager.init_app(app)
+
+    ev = Event("1", 45, 23, 1, 2, 3, 4)
+    ev1 = Event("2", 45, 22, 2, 3, 4, 5)
+
+    MongoDatabase.insert_event(ev)
+    MongoDatabase.insert_event(ev1)
 
 
 def register_error_handlers(app):
@@ -64,4 +70,4 @@ def load_user(user_email):
 
 @app.route("/", methods=['get'])
 def home():
-    return redirect(url_for('manage.manage_index'))
+    return redirect(url_for('event.show_events'))

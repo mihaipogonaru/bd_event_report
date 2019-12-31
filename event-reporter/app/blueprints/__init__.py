@@ -1,2 +1,2 @@
-from .manage import blueprint as manage_bp
-from .rapports import blueprint as rapports_bp
+from .event import blueprint as event_bp
+from .report import blueprint as report_bp

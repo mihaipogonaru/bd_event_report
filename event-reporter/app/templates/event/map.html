@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% from "macros/render_form.html" import render_field, render_checkbox %}
+{% block outer_content %}
+<center><div id="map" style="height: 720px; width: 1280px;"></div></center>
+
+{% for i in range(events|length): %}
+<label id="points{{i}}" lat="{{events[i]['latitude']}}" lon="{{events[i]['longitude']}}" description="{{events[i]['description']}}" style="display: none;"></label>
+
+{% endfor%}
+<script>
+    var roLat = 29.2;
+    var roLon = 42.3;
+    var defaultZoom = 7;
+
+    // initialize map
+    map = L.map('map').setView([roLat, roLon], defaultZoom);
+    // set map tiles source
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    }).addTo(map);
+
+    for (var i = 0; i < {{ events|length }}; i++) {
+        var latt = document.getElementById("points" + i).getAttribute('lat');
+        var lonn = document.getElementById("points" + i).getAttribute('lon');
+        var desc = document.getElementById("points" + i).getAttribute('description');
+        marker = L.marker([latt, lonn]).addTo(map).on('click', onClick);
+        // // add popup to the marker
+        marker.bindPopup(desc).openPopup();
+    }
+
+    function onClick(e) {
+        //alert(this.getLatLng());
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB90liH1hq_Eo7TvWH2ajg-R34tKSZdyWs&callback=initMap"></script>
+{% endblock %}

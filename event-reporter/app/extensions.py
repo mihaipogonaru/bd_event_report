@@ -2,7 +2,7 @@
 in app.py
 """
 
-from .database import Database as db
+from .database import MongoDatabase
 from flask_login import LoginManager
 
 login_manager = LoginManager()
