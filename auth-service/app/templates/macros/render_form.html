@@ -1,0 +1,45 @@
+{% macro render_field(field,
+        form_group = True,
+        div_class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label",
+        label_args = {'class': "mdl-textfield__label"},
+        field_args = {'class': "form-control mdl-textfield__input"}) %}
+
+{% if form_group %}
+<div class="form-group">
+{% endif %}
+    <div class="{{ div_class }}">
+        {{ field.label(**label_args) }}
+        {{ field(**field_args) }}
+    </div>
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <p style="color:red;">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+{% if form_group %}
+</div>
+{% endif %}
+{% endmacro %}
+
+
+{% macro render_all_errors(form) %}
+<div>
+{% if form.errors %}
+    {% for field, errors in form.errors.items() %}
+        {% for error in errors %}
+            <p style="color:red;">{{ error }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+</div>
+{% endmacro %}
+
+
+{% macro render_checkbox(field, div_class="form-group") %}
+<div class="{{ div_class }} sdob-checkbox-padding">
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        {{ field(class="mdl-checkbox__input") }}
+        <span class="mdl-checkbox__label">{{ field.label.text }}</span>
+    </label>
+</div>
+{% endmacro %}

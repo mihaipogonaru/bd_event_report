@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% from "macros/utils.html" import render_field, render_dict %}
+{% block outer_content %}
+<div class="mdl-grid">
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--4-col">
+    <h1><strong>USERS</strong></h1>
+    <br/>
+    {% for user in users %}
+        {{ render_dict(user) }}
+    {% endfor %}
+    <br/><br/>
+    <a href="{{ url_for('user.add') }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button"> Add User </button></a>
+    <br/><br/>
+    <a href="{{ url_for('user.remove') }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button"> Remove User </button></a>
+    </div>
+    <div class="mdl-layout-spacer"></div>
+</div>
+{% endblock %}

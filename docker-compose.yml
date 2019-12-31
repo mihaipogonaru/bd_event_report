@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+  mongo-db:
+    image: mpogonaru/bd_event-reporter_mongo:v0.1
+    networks:
+      - main-network
+    volumes:
+      - "mongo-db-data:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=1
+      - MYSQL_DATABASE=event_reporter
+      - TZ='Europe/Bucharest'
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  event-reporter:
+    image: mpogonaru/bd_event-reporter_app:v0.1
+    networks:
+      - main-network
+    deploy:
+      replicas: 4
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+    depends_on:
+      - mongo-db
+
+  auth-db:
+    image: mpogonaru/bd_event-reporter_auth-db:v0.1
+    networks:
+      - auth-network
+    volumes:
+      - "auth-db-data:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=1
+      - MYSQL_DATABASE=event_reporter
+      - TZ='Europe/Bucharest'
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  auth-service:
+    image: mpogonaru/bd_event-reporter_auth-service:v0.1
+    networks:
+      - auth-network
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+    depends_on:
+      - auth-db
+
+  nginx:
+    image: mpogonaru/bd_event-reporter_nginx:v0.1
+    ports:
+      - "80:80"
+    networks:
+      - auth-network
+      - main-network
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+      placement:
+        constraints:
+          - node.role == manager
+    depends_on:
+      - auth-service
+      - event-reporter
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "9000:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    stop_grace_period: 30s
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+      placement:
+        constraints:
+          - node.role == manager
+
+networks:
+  auth-network:
+  main-network:
+volumes:
+  auth-db-data:
+  mongo-db-data:

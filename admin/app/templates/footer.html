@@ -1,0 +1,15 @@
+<footer class="mdl-mini-footer" style="background: rgba(0, 0, 0, 0);">
+    <div class="mdl-mini-footer__left-section">
+        <div class="mdl-logo">
+            <span class="android-title mdl-layout-title">
+                <a href="{% if current_user.is_authenticated %}{{ url_for('user.home') }}
+                         {% else %}/{% endif %}">
+                    <img class="android-logo-image" src="/static/images/sdob.png"></a>
+            </span>
+        </div>
+        <ul class="mdl-mini-footer__link-list">
+            <li><a href="{{ url_for('no_auth.about') }}">About</a></li>
+        </ul>
+    </div>
+    <div class="mdl-mini-footer__right-section">Copyright 2018 &copy; SDOB IP Bank</div>
+</footer>

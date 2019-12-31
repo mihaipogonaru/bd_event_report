@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% from "macros/utils.html" import render_field, render_checkbox %}
+{% block outer_content %}
+<div class="mdl-grid">
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--4-col">
+    <h1><strong>REMOVE USER</strong></h1>
+    <br/>
+    <form id="loginForm" class="form form-register" method="POST" action="" role="form">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.username) }}
+        <p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Remove </button></p>
+    </form>
+    </div>
+    <div class="mdl-layout-spacer"></div>
+</div>
+{% endblock %}

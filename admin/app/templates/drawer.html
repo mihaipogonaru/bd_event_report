@@ -1,0 +1,12 @@
+<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+    <header class="demo-drawer-header">
+        <div class="demo-avatar-dropdown">
+        {% if current_user.is_authenticated %}
+        <span>{{ current_user.id }}</span>
+        {% endif %}
+        </div>
+    </header>
+    <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+        <a class="mdl-navigation__link" href="{{ url_for('user.viewall') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation"></i>Users</a>
+    </nav>
+</div>
