@@ -8,12 +8,12 @@
 
 {% endfor%}
 <script>
-    var roLat = 29.2;
-    var roLon = 42.3;
+    var roLon = 46.6;
+    var roLat = 22.5;
     var defaultZoom = 7;
 
     // initialize map
-    map = L.map('map').setView([roLat, roLon], defaultZoom);
+    map = L.map('map').setView([roLon, roLat], defaultZoom);
     // set map tiles source
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
