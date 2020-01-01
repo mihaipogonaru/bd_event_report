@@ -46,8 +46,11 @@ def register_error_handlers(app):
 
 @login_manager.user_loader
 def load_user(user_email):
-    user = User(db.call_no_throw(db.select_user, email=user_email))
-    return user
+    user = db.call_no_throw(db.select_user, email=user_email)
+    if user == db.err:
+        return None
+
+    return User(user)
 
 
 app = create_app()
@@ -72,7 +75,7 @@ def login_post():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         login_user(form.user, remember=form.remember.data)
-        return redirect('/')
+        return redirect('/event')
 
     return render_template('auth/login.html', form=form)
 

@@ -1,5 +1,22 @@
 {% extends "layout.html" %}
-{% from "macros/render_form.html" import render_field, render_checkbox %}
+{% from "macros/render_form.html" import render_field, render_field_2lines, render_checkbox %}
 {% block outer_content %}
-
+<div class="mdl-grid">
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--4-col">
+    <h1><strong>LOGIN</strong></h1>
+    <br/>
+    <form id="loginForm" class="form form-register" method="POST" action="" role="form">
+        {{ form.hidden_tag() }}
+        {{ form.timestamp }}
+        {{ render_field(form.latitude) }}
+        {{ render_field(form.longitude) }}
+        {{ render_field(form.type) }}
+        {{ render_field_2lines(form.description) }}
+        {{ render_field_2lines(form.image, div_class_l1="") }}
+        <p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Submit </button></p>
+    </form>
+    </div>
+    <div class="mdl-layout-spacer"></div>
+</div>
 {% endblock %}

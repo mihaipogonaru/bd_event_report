@@ -4,32 +4,48 @@
 <center><div id="map" style="height: 720px; width: 1280px;"></div></center>
 
 {% for i in range(events|length): %}
-<label id="points{{i}}" lat="{{events[i]['latitude']}}" lon="{{events[i]['longitude']}}" description="{{events[i]['description']}}" style="display: none;"></label>
+<label id="points{{i}}"
+       ts="{{events[i].timestamp}}"
+       lat="{{events[i].latitude}}"
+       lon="{{events[i].longitude}}"
+       alert="{{events[i].alert_code.name}}"
+       description="{{events[i].description}}"
+       url="{{ url_for('event.show_event', event=events[i].name) }}"
+       style="display: none;"></label>
+{% endfor %}
 
-{% endfor%}
 <script>
-    var roLon = 46.6;
-    var roLat = 22.5;
+    var roLat = 46.2;
+    var roLong = 25.5;
     var defaultZoom = 7;
 
     // initialize map
-    map = L.map('map').setView([roLon, roLat], defaultZoom);
+    map = L.map('map').setView([roLat, roLong], defaultZoom);
     // set map tiles source
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
         maxZoom: 18,
     }).addTo(map);
 
-    for (var i = 0; i < {{ events|length }}; i++) {
-        var latt = document.getElementById("points" + i).getAttribute('lat');
-        var lonn = document.getElementById("points" + i).getAttribute('lon');
+    for (var i = 0; i < {{ events|length }}; ++i) {
+        var ts = document.getElementById("points" + i).getAttribute('ts');
+        var lat = document.getElementById("points" + i).getAttribute('lat');
+        var long = document.getElementById("points" + i).getAttribute('lon');
+        var alert = document.getElementById("points" + i).getAttribute('alert');
         var desc = document.getElementById("points" + i).getAttribute('description');
-        marker = L.marker([latt, lonn]).addTo(map).on('click', onClick);
-        // // add popup to the marker
-        marker.bindPopup(desc).openPopup();
+        var url = document.getElementById("points" + i).getAttribute('url');
+
+        msg = alert + " at coordinates (" + lat + ", " + long  + ")<br/>"
+        msg += "Date: " + ts + "<br/>"
+        msg += desc + "<br/>"
+        msg += "<a href=\"" + url + "\"> Show event </a>"
+
+        marker = L.marker([lat, long]).addTo(map).on('click', onClick);
+        // add popup to the marker
+        marker.bindPopup(msg).openPopup();
     }
 
-    function onClick(e) {
+    function onClick(marker) {
         //alert(this.getLatLng());
     }
 </script>

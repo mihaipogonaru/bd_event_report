@@ -4,7 +4,8 @@ import os
 class MongoConfig:
     MONGO_URL = 'mongo-db'
     MONGO_PORT = '27017'
-    MONGO_URI = "mongodb://{}:{}/EventReporter".format(MONGO_URL, MONGO_PORT)
+    MONGO_DATABASE = 'EventReporter'
+    MONGO_URI = "mongodb://{}:{}/{}".format(MONGO_URL, MONGO_PORT, MONGO_DATABASE)
 
 
 class Config(MongoConfig):

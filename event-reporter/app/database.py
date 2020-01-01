@@ -17,35 +17,42 @@ class MongoDatabase:
 
     @staticmethod
     def get_events():
-        events = MongoDatabase.mongodb.db.events.find()
-        return events if events else None
+        evs = MongoDatabase.mongodb.db.events.find()
+        events = [Event.from_document(ev) for ev in evs]
+
+        return events
 
     @staticmethod
     def insert_event(event: Event):
         event_collection = MongoDatabase.mongodb.db.events
-        event_collection.insert(event.to_dict())
+        event_collection.insert(event.to_document())
 
     @staticmethod
-    def select_event(latitude, longitude, file_name):
+    def select_event(name: str):
         event_collection = MongoDatabase.mongodb.db.events
-        event = event_collection.find({'latitude': latitude, 'longitude': longitude, 'file_name': file_name})
-        return event if event else None
+        event = event_collection.find_one({'name': name})
+
+        return Event.from_document(event) if event else None
 
     @staticmethod
-    def delete_event(latitude, longitude, file_name):
+    def delete_event(name: str):
         event_collection = MongoDatabase.mongodb.db.events
-        event_collection.delete_one({'latitude': latitude, 'longitude': longitude, 'file_name': file_name})
+        event_collection.delete_one({'name': name})
 
     @staticmethod
     def insert_photo(photo_data, file_name):
-        fs = GridFS(MongoDatabase.mongodb.db)
-        fs.put(photo_data, filename=file_name)
+        MongoDatabase.mongodb.save_file(file_name, photo_data)
 
     @staticmethod
     def select_photo(file_name):
         fs = GridFS(MongoDatabase.mongodb.db)
         photo_data = fs.get_last_version(filename=file_name)
+
         return photo_data if photo_data else None
+
+    @staticmethod
+    def send_photo(file_name):
+        return MongoDatabase.mongodb.send_file(file_name)
 
     # @staticmethod
     # def delete_photo(file_name):

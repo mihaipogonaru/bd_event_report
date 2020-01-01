@@ -1,6 +1,6 @@
-class ValidationMessages(object):
+class ValidationMessages:
     data_required = "This field is required"
 
 
-class FatalErrorMessages(object):
+class FatalErrorMessages:
     no_user = "No user found in request"
