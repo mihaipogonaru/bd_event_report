@@ -35,8 +35,8 @@ class Event:
         self.longitude = longitude
         self.alert_code = alert_code
         self.description = description
-        self.tag = tag
         self.image_extension = image_extension
+        self.tag = tag
 
         self.name = "{}_{}_{}_{}".format(alert_code.name, timestamp, latitude, longitude).replace(" ", "_")
 
