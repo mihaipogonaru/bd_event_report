@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, url_for, request, flash
-from werkzeug import secure_filename
+from werkzeug.datastructures import CombinedMultiDict
 
 from app.extensions import MongoDatabase
 from app.models import AlertCode, Event
@@ -16,20 +16,34 @@ def report_event():
 
 @blueprint.route("/", methods=['post'])
 def report_event_post():
-    form = ReportForm(request.form)
+    form = ReportForm(CombinedMultiDict((request.files, request.form)))
 
     if form.validate():
         ev = Event(
             timestamp=str(form.timestamp.data),
-            latitude=str(form.latitude.data),
-            longitude=str(form.longitude.data),
+            latitude=form.latitude.data,
+            longitude=form.longitude.data,
             alert_code=AlertCode.from_name(form.type.data),
             description=form.description.data
         )
 
+        with open("always.txt", 'w') as f:
+            f.write("HEY")
+
         MongoDatabase.insert_event(ev)
         if form.image.data:
-            MongoDatabase.insert_photo(form.image.data, ev.name)
+            image_data = form.image.data
+
+            with open("plm.txt", 'w') as f:
+                f.write(image_data.read())
+
+            with open("plm1.txt", 'w') as f:
+                f.write("HEY")
+
+            res = MongoDatabase.insert_photo(ev.name, image_data)
+            if not res.acknowledged:
+                flash('Internal error')
+                return render_template('event/report.html', form=form)
 
         flash('Event reported')
         return redirect(url_for('event.show_events'))

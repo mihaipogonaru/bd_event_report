@@ -40,7 +40,7 @@ class MongoDatabase:
         event_collection.delete_one({'name': name})
 
     @staticmethod
-    def insert_photo(photo_data, file_name):
+    def insert_photo(file_name, photo_data):
         MongoDatabase.mongodb.save_file(file_name, photo_data)
 
     @staticmethod

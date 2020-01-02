@@ -37,7 +37,7 @@ class Event:
         self.description = description
         self.tag = tag
 
-        self.name = "{}_{}_{}_{}".format(alert_code.name, timestamp, latitude, longitude)
+        self.name = "{}_{}_{}_{}".format(alert_code.name, timestamp, latitude, longitude).replace(" ", "_")
 
     @staticmethod
     def from_document(e: dict):

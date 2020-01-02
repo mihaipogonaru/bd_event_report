@@ -33,7 +33,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=1
       - MYSQL_DATABASE=event_reporter
-      - TZ='Europe/Bucharest'
+      # - TZ='Europe/Bucharest'
     deploy:
       restart_policy:
         condition: on-failure

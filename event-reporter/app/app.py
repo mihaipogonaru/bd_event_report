@@ -37,12 +37,6 @@ def register_extensions(app):
     MongoDatabase.mongodb.init_app(app)
     login_manager.init_app(app)
 
-    ev = Event("1", 45, 23, AlertCode.from_name("FIRE"), 2, 3)
-    ev1 = Event("2", 45, 22, AlertCode.from_name("TORNADO"), 3, 4)
-
-    MongoDatabase.insert_event(ev)
-    MongoDatabase.insert_event(ev1)
-
 
 def register_error_handlers(app):
     def render_error(error):

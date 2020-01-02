@@ -6,14 +6,14 @@
     <div class="mdl-cell mdl-cell--4-col">
     <h1><strong>LOGIN</strong></h1>
     <br/>
-    <form id="loginForm" class="form form-register" method="POST" action="" role="form">
+    <form id="loginForm" class="form form-register" method="POST" enctype="multipart/form-data" action="" role="form">
         {{ form.hidden_tag() }}
-        {{ form.timestamp }}
+        {{ render_field_2lines(form.timestamp) }}
         {{ render_field(form.latitude) }}
         {{ render_field(form.longitude) }}
         {{ render_field(form.type) }}
         {{ render_field_2lines(form.description) }}
-        {{ render_field_2lines(form.image, div_class_l1="") }}
+        {{ render_field_2lines(form.image) }}
         <p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Submit </button></p>
     </form>
     </div>
