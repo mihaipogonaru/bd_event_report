@@ -22,7 +22,8 @@ class ReportForm(FlaskForm):
                        choices=[(ac.name, ac.name.lower()) for ac in AlertCode],
                        validators=[DataRequired(ValidationMessages.data_required)])
     description = TextAreaField('Description', validators=[DataRequired(ValidationMessages.data_required)])
-    image = FileField('Image (.jpg .png)', validators=[FileAllowed(['jpg', 'png'], ValidationMessages.file_extension)])
+    image = FileField('Image (.jpg .jpeg .png)',
+                      validators=[FileAllowed(['jpg', 'jpeg', 'png'], ValidationMessages.file_extension)])
 
     def __init__(self, *args, **kwargs):
         super(ReportForm, self).__init__(*args, **kwargs)

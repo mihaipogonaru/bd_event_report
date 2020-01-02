@@ -34,16 +34,11 @@ def report_event_post():
         if form.image.data:
             image_data = form.image.data
 
-            with open("plm.txt", 'w') as f:
-                f.write(image_data.read())
-
             with open("plm1.txt", 'w') as f:
                 f.write("HEY")
+                f.write(str(form.image.data.read()))
 
-            res = MongoDatabase.insert_photo(ev.name, image_data)
-            if not res.acknowledged:
-                flash('Internal error')
-                return render_template('event/report.html', form=form)
+            MongoDatabase.insert_photo(ev.name, image_data)
 
         flash('Event reported')
         return redirect(url_for('event.show_events'))
