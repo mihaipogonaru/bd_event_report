@@ -22,7 +22,8 @@ def show_event(event: str):
 
 @blueprint.route("/image/<string:event>/", methods=['get'])
 def get_event_image(event: str):
-    with open("plm.jpg", 'w') as f:
-        f.write(MongoDatabase.select_photo(event).read())
+    ev = MongoDatabase.select_event(event)
+    if not ev or not ev.has_image():
+        return "", 404
 
-    return MongoDatabase.send_photo(event)
+    return MongoDatabase.send_photo(ev.get_image_name())

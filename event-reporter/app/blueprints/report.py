@@ -19,26 +19,20 @@ def report_event_post():
     form = ReportForm(CombinedMultiDict((request.files, request.form)))
 
     if form.validate():
+        image_extension = form.image.data.filename.split('.')[-1] if form.image.data else None
+
         ev = Event(
             timestamp=str(form.timestamp.data),
             latitude=form.latitude.data,
             longitude=form.longitude.data,
             alert_code=AlertCode.from_name(form.type.data),
-            description=form.description.data
+            description=form.description.data,
+            image_extension=image_extension
         )
 
-        with open("always.txt", 'w') as f:
-            f.write("HEY")
-
         MongoDatabase.insert_event(ev)
-        if form.image.data:
-            image_data = form.image.data
-
-            with open("plm1.txt", 'w') as f:
-                f.write("HEY")
-                f.write(str(form.image.data.read()))
-
-            MongoDatabase.insert_photo(ev.name, image_data)
+        if ev.has_image():
+            MongoDatabase.insert_photo(ev.get_image_name(), form.image.data)
 
         flash('Event reported')
         return redirect(url_for('event.show_events'))
