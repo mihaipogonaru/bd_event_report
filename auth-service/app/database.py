@@ -13,6 +13,7 @@ class Database:
     def set_session_read_commited():
         Database.cursor.execute('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;')
         Database.db.commit()
+        Database.cursor.nextset()
 
     @staticmethod
     def call_no_throw(method, *args, **kwargs):
@@ -25,6 +26,7 @@ class Database:
     def insert_user(email: str, password):
         Database.cursor.callproc('insert_user', (email, password))
         Database.db.commit()
+        Database.cursor.nextset()
 
     @staticmethod
     def select_user(email: str):
@@ -39,6 +41,7 @@ class Database:
     def delete_user(email: str):
         Database.cursor.callproc('delete_user', (email,))
         Database.db.commit()
+        Database.cursor.nextset()
     
     @staticmethod
     def get_users():
