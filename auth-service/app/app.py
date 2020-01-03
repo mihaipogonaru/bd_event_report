@@ -46,7 +46,7 @@ def register_error_handlers(app):
 @login_manager.user_loader
 def load_user(user_email):
     user = db.call_no_throw(db.select_user, email=user_email)
-    if user == db.err:
+    if user == db.err or not user:
         return None
 
     return User(user)
