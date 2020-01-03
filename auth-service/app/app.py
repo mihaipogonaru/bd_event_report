@@ -75,7 +75,7 @@ def login_post():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         login_user(form.user, remember=form.remember.data)
-        return redirect('/event')
+        return redirect('/')
 
     return render_template('auth/login.html', form=form)
 
