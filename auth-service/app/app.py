@@ -36,7 +36,6 @@ def register_blueprints(app):
 
 
 def register_extensions(app):
-    db.set_session_read_commited()
     login_manager.init_app(app)
 
 
