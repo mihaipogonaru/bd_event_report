@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker swarm init --advertise-addr enp0s3
+docker swarm init --advertise-addr wlo1
