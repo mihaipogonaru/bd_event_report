@@ -6,7 +6,7 @@ services:
     networks:
       - main-network
     volumes:
-      - "mongo-db-data:/var/lib/mysql"
+      - "mongo-db-data:/data/db"
     deploy:
       restart_policy:
         condition: on-failure
