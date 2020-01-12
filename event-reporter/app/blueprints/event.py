@@ -7,7 +7,7 @@ blueprint = Blueprint("event", __name__, url_prefix='/event')
 
 @blueprint.route("/", methods=['get'])
 def show_events():
-    events = MongoDatabase.get_events()
+    events = MongoDatabase.get_events(get_invisible=False)
     return render_template('event/map.html', events=events)
 
 

@@ -1,5 +1,17 @@
 """Helper utilities and decorators."""
-from flask import flash
+from functools import wraps
+
+from flask import flash, redirect
+from flask_login import current_user
+
+
+def admin_required(view):
+    @wraps(view)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_admin():
+            return "", 401
+        return view(*args, **kwargs)
+    return decorated_view
 
 
 def flash_errors(form, category="warning"):
