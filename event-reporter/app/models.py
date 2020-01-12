@@ -14,7 +14,7 @@ class User(UserMixin):
         self.id = name
 
     def is_admin(self):
-        return self.id == Config.ADMIN_EMAIL
+        return self.id in Config.ADMIN_EMAILS
 
 
 class AlertCode(Enum):
