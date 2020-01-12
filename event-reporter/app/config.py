@@ -12,6 +12,7 @@ class Config(MongoConfig):
     SECRET_KEY = "BD_SUPER_!@#SA$W!@%^%$df12^5#s9d8%09@#SxC%*_SECRET_KEY"
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
+    ADMIN_EMAIL = 'admin@evr.com'
     ASSETS_DEBUG = False
 
 
