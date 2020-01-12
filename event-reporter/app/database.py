@@ -22,15 +22,10 @@ class MongoDatabase:
 
         return [e for e in events if get_invisible or e.is_visible()]
 
-        # if get_invisible:
-        #     return [e for e in events if not e.is_visible()]
-        # else:
-        #     return [e for e in events if e.is_visible()]
-
     @staticmethod
-    def update_event_display(name: str = ''):
-        MongoDatabase.mongodb.db.events.update_one({'name': name, 'display': False},
-                                                   {"$set": {'name': name, 'display': True}})
+    def update_event_display(name: str):
+        event_collection = MongoDatabase.mongodb.db.events
+        event_collection.update_one({'name': name, 'display': False}, {"$set": {'name': name, 'display': True}})
 
     @staticmethod
     def insert_event(event: Event):
