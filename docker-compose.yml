@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mongo-db:
-    image: mpogonaru/bd_event-reporter_mongo:latest
+    image: mpogonaru/bd_event-reporter_mongo:andi
     networks:
       - main-network
     volumes:
@@ -13,7 +13,7 @@ services:
         max_attempts: 5
 
   event-reporter:
-    image: mpogonaru/bd_event-reporter_app:latest
+    image: mpogonaru/bd_event-reporter_app:andi
     networks:
       - main-network
     deploy:
@@ -25,7 +25,8 @@ services:
       - mongo-db
 
   auth-db:
-    image: mpogonaru/bd_event-reporter_auth-db:latest
+    image: mpogonaru/bd_event-reporter_auth-db:andi
+    command: --default-authentication-plugin=mysql_native_password
     networks:
       - auth-network
     volumes:
@@ -40,7 +41,7 @@ services:
         max_attempts: 5
 
   auth-service:
-    image: mpogonaru/bd_event-reporter_auth-service:latest
+    image: mpogonaru/bd_event-reporter_auth-service:andi
     networks:
       - auth-network
     deploy:
@@ -51,7 +52,7 @@ services:
       - auth-db
 
   nginx:
-    image: mpogonaru/bd_event-reporter_nginx:latest
+    image: mpogonaru/bd_event-reporter_nginx:andi
     ports:
       - "80:80"
     networks:
