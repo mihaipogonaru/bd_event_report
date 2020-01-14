@@ -1,4 +1,4 @@
-<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+{#<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
     <header class="demo-drawer-header">
         <div class="demo-avatar-dropdown">
         <span>{{ current_user.id }}</span>
@@ -11,5 +11,20 @@
             <a class="mdl-navigation__link" href="{{ url_for('admin.event_approve_get') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation"></i>Approve Events</a>
         {% endif %}
         <a class="mdl-navigation__link" href="/logout/"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">logout</i>Logout</a>
+    </nav>
+</div>#}
+
+<div class="mdl-layout__drawer">
+    <span class="mdl-layout__title">
+        Welcome,<br>
+        <span class="mdl-badge" data-badge="{{ current_user.id[0] }}">{{ current_user.id }}</span>
+    </span>
+    <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="{{ url_for('event.show_events') }}">Show events</a>
+        <a class="mdl-navigation__link" href="{{ url_for('report.report_event') }}">Report event</a>
+        {% if current_user.is_admin() %}
+            <a class="mdl-navigation__link" href="{{ url_for('admin.event_approve_get') }}">Approve Events</a>
+        {% endif %}
+        <a class="mdl-navigation__link" href="/logout/">Logout</a>
     </nav>
 </div>

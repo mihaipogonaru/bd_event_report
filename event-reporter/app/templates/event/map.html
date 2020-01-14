@@ -20,7 +20,7 @@
     var defaultZoom = 7;
 
     // initialize map
-    map = L.map('map').setView([roLat, roLong], defaultZoom);
+    map = L.map('map', {minZoom: 7}).setView([roLat, roLong], defaultZoom);
     // set map tiles source
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
