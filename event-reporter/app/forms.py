@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import FloatField, TextAreaField, SelectField, DateTimeField
+from wtforms import FloatField, TextAreaField, SelectField, DateTimeField, StringField, HiddenField
 from wtforms.validators import DataRequired
 from wtforms.fields.html5 import DateField
 
@@ -34,3 +34,14 @@ class ReportForm(FlaskForm):
             return False
 
         return True
+
+
+class ApproveForm(FlaskForm):
+    name = HiddenField('EventName')
+
+    def __init__(self, *args, **kwargs):
+        super(ApproveForm, self).__init__(*args, **kwargs)
+        self.name.data = kwargs['event'] if not self.name.data else self.name.data
+
+    def get_name(self):
+        return self.name.data

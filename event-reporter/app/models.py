@@ -3,6 +3,7 @@ from enum import Enum
 from flask_login import UserMixin
 
 from app.messages import FatalErrorMessages
+from app.config import Config
 
 
 class User(UserMixin):
@@ -11,6 +12,9 @@ class User(UserMixin):
             raise Exception(FatalErrorMessages.no_user)
 
         self.id = name
+
+    def is_admin(self):
+        return self.id in Config.ADMIN_EMAILS
 
 
 class AlertCode(Enum):
@@ -29,7 +33,7 @@ class AlertCode(Enum):
 
 class Event:
     def __init__(self, timestamp: str, latitude: float, longitude: float, alert_code: AlertCode, description: str,
-                 image_extension: str, tag: str = None):
+                 image_extension: str, tag: str = None, display: bool = False):
         self.timestamp = timestamp
         self.latitude = latitude
         self.longitude = longitude
@@ -37,6 +41,7 @@ class Event:
         self.description = description
         self.image_extension = image_extension
         self.tag = tag
+        self.display = display
 
         self.name = "{}_{}_{}_{}".format(alert_code.name, timestamp, latitude, longitude).replace(" ", "_")
 
@@ -49,6 +54,9 @@ class Event:
 
         return "{}.{}".format(self.name, self.image_extension)
 
+    def is_visible(self):
+        return self.display
+
     @staticmethod
     def from_document(e: dict):
         alert_code = AlertCode.from_name(e['alert_code'])
@@ -60,7 +68,8 @@ class Event:
             alert_code=alert_code,
             description=e['description'],
             image_extension=e['image_extension'],
-            tag=e['tag']
+            tag=e['tag'],
+            display=e['display']
         )
 
     def to_document(self):
@@ -72,7 +81,8 @@ class Event:
             'alert_code': self.alert_code.name,
             'description': self.description,
             'image_extension': self.image_extension,
-            'tag': self.tag
+            'tag': self.tag,
+            'display': self.display
         }
         # return self.__dict__
         return dictionary

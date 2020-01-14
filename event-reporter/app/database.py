@@ -16,11 +16,16 @@ class MongoDatabase:
             return MongoDatabase.err
 
     @staticmethod
-    def get_events():
+    def get_events(get_invisible: bool = False):
         evs = MongoDatabase.mongodb.db.events.find()
         events = [Event.from_document(ev) for ev in evs]
 
-        return events
+        return [e for e in events if get_invisible or e.is_visible()]
+
+    @staticmethod
+    def update_event_display(name: str):
+        event_collection = MongoDatabase.mongodb.db.events
+        event_collection.update_one({'name': name, 'display': False}, {"$set": {'name': name, 'display': True}})
 
     @staticmethod
     def insert_event(event: Event):

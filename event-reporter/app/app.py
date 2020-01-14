@@ -6,7 +6,7 @@ from app.extensions import (
     MongoDatabase,
     login_manager
 )
-from app.blueprints import event_bp, report_bp
+from app.blueprints import event_bp, report_bp, admin_bp
 
 from app.models import User, AlertCode, Event
 
@@ -31,6 +31,7 @@ def create_app(config_object=Config):
 def register_blueprints(app):
     app.register_blueprint(event_bp)
     app.register_blueprint(report_bp)
+    app.register_blueprint(admin_bp)
 
 
 def register_extensions(app):
