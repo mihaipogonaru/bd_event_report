@@ -17,7 +17,18 @@ def show_event(event: str):
     if not ev:
         return "", 404
 
-    return render_template('event/event.html', ev=ev)
+    ev_doc = ev.to_document()
+
+    ev_name = ev_doc['name']
+    ev_timestamp = ev_doc['timestamp']
+    ev_latitude = ev_doc['latitude']
+    ev_longitude = ev_doc['longitude']
+    ev_alert_code = ev_doc['alert_code']
+    ev_description = ev_doc['description']
+    ev_tag = ev_doc['tag']
+
+    return render_template('event/event.html', ev=ev, name=ev_name, timestamp=ev_timestamp, lat=ev_latitude,
+                           long=ev_longitude, al_code=ev_alert_code, desc=ev_description, tag=ev_tag)
 
 
 @blueprint.route("/image/<string:event>/", methods=['get'])
