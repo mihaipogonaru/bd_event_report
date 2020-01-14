@@ -1,0 +1,5 @@
+{% for k, v in ev.to_document().items(): %}
+<p> {{ k }} - {{ v }} </p>
+{% endfor %}
+
+<img alt="No Image" src="{{ url_for('event.get_event_image', event=ev.name) }}"/>

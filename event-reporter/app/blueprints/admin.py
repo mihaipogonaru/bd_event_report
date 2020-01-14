@@ -21,7 +21,12 @@ def event_approve_get():
 def event_approve_post():
     form = ApproveForm(request.form)
     name = str(form.name.data)
-    MongoDatabase.update_event_display(name)
 
-    flash("Event approved")
+    if request.form['action'] == 'approve':
+        MongoDatabase.update_event_display(name)
+        flash("Event approved")
+    elif request.form['action'] == 'delete':
+        MongoDatabase.delete_event(name)
+        flash("Event deleted")
+
     return redirect(url_for('admin.event_approve_get'))

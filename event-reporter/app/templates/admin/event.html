@@ -24,8 +24,11 @@
                 <tr>
                   <td class="mdl-data-table__cell--non-numeric"> {{form.get_name()}} </td>
                   <td>
-                      <input type="hidden"  name={{form.get_name()}}>
-                      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Approve </button>
+<!--                      <input type="hidden"  name={{form.get_name()}}>-->
+                      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action" value="approve"> Approve </button>
+                  </td>
+                  <td>
+                      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action" value="delete"> Delete </button>
                   </td>
                 </tr>
             </form>

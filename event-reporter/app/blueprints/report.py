@@ -1,9 +1,10 @@
 from flask import Blueprint, redirect, render_template, url_for, request, flash
 from werkzeug.datastructures import CombinedMultiDict
 
-from app.extensions import MongoDatabase
+from app.extensions import MongoDatabase, EvrMail
 from app.models import AlertCode, Event
 from app.forms import ReportForm
+from app.config import Config
 
 blueprint = Blueprint("report", __name__, url_prefix='/report')
 
@@ -33,6 +34,9 @@ def report_event_post():
         MongoDatabase.insert_event(ev)
         if ev.has_image():
             MongoDatabase.insert_photo(ev.get_image_name(), form.image.data)
+
+        msg = EvrMail.create_message(Config.ADMIN_EMAILS, ev)
+        EvrMail.send_message(msg)
 
         flash('Event reported')
         return redirect(url_for('event.show_events'))

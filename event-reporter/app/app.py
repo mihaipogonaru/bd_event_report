@@ -4,6 +4,7 @@ from app.config import Config
 from app.assets import register_assets
 from app.extensions import (
     MongoDatabase,
+    EvrMail,
     login_manager
 )
 from app.blueprints import event_bp, report_bp, admin_bp
@@ -36,6 +37,7 @@ def register_blueprints(app):
 
 def register_extensions(app):
     MongoDatabase.mongodb.init_app(app)
+    EvrMail.mail.init_app(app)
     login_manager.init_app(app)
 
 
