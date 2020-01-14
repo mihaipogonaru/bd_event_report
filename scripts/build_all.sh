@@ -3,17 +3,17 @@
 set -x
 set -e
 
-docker build --no-cache --tag mpogonaru/bd_event-reporter_auth-db:andi auth-db/
+docker build --no-cache --tag mpogonaru/bd_event-reporter_auth-db:sft auth-db/
 #docker push mpogonaru/bd_event-reporter_auth-db:latest
 
-docker build --no-cache --tag mpogonaru/bd_event-reporter_auth-service:andi auth-service/
+docker build --no-cache --tag mpogonaru/bd_event-reporter_auth-service:sft auth-service/
 #docker push mpogonaru/bd_event-reporter_auth-service:latest
 
-docker build --no-cache --tag mpogonaru/bd_event-reporter_mongo:andi mongo-db/
+docker build --no-cache --tag mpogonaru/bd_event-reporter_mongo:sft mongo-db/
 #docker push mpogonaru/bd_event-reporter_mongo:latest
 
-docker build --no-cache --tag mpogonaru/bd_event-reporter_app:andi event-reporter/
+docker build --no-cache --tag mpogonaru/bd_event-reporter_app:sft event-reporter/
 #docker push mpogonaru/bd_event-reporter_app:latest
 
-docker build --no-cache --tag mpogonaru/bd_event-reporter_nginx:andi nginx/
+docker build --no-cache --tag mpogonaru/bd_event-reporter_nginx:sft nginx/
 #docker push mpogonaru/bd_event-reporter_nginx:latest
