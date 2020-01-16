@@ -2,23 +2,50 @@
 {% from "macros/render_form.html" import render_field, render_field_2lines, render_checkbox %}
 {% block outer_content %}
 <div class="mdl-grid">
-    <div class="mdl-layout-spacer"></div>
-    <div class="mdl-cell mdl-cell--4-col">
-        <center>
+<div class="mdl-cell mdl-cell--4-col"></div>
+<div class="mdl-cell mdl-cell--4-col">
     <h1><strong>REPORT</strong></h1>
     <br/>
-    <form id="loginForm" class="form form-register" method="POST" enctype="multipart/form-data" action="" role="form">
-        {{ form.hidden_tag() }}
-        {{ render_field_2lines(form.timestamp) }}
-        {{ render_field(form.latitude) }}
-        {{ render_field(form.longitude) }}
-        {{ render_field(form.type) }}
-        {{ render_field(form.description, div_class = "mdl-textfield mdl-js-textfield") }}
-        {{ render_field_2lines(form.image, div_class_l1 = "mdl-textfield mdl-js-textfield", div_class_l2 = "mdl-textfield mdl-js-textfield") }}
-        <p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Submit </button></p>
+    <form id="reportForm" class="form form-register" method="POST" enctype="multipart/form-data" action="" role="form">
+    {{ form.hidden_tag() }}
+    <ul class="demo-list-item mdl-list">
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                {{ render_field(form.timestamp) }}
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                {{ render_field(form.latitude) }}
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+               {{ render_field(form.longitude) }}
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                {{ render_field(form.type) }}
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                {{ render_field(form.description, field_args={'class': "form-control mdl-textfield__input", 'rows': 1}) }}
+            </span>
+        </li>
+        <li class="mdl-list__item--two-line">
+            <span class="mdl-list__item-primary-content">
+                {{ form.image.label() }}
+            </span>
+            <span class="mdl-list__item-secondary-content">
+                {{ form.image() }}
+            </span>
+        </li>
+    </ul>
+    <p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Submit </button></p>
     </form>
-        </center>
-    </div>
-    <div class="mdl-layout-spacer"></div>
+</div>
+<div class="mdl-cell mdl-cell--4-col"></div>
 </div>
 {% endblock %}

@@ -16,17 +16,26 @@ def event_approve_get():
     return render_template('admin/event.html', forms=forms)
 
 
-@blueprint.route("/", methods=['post'])
+@blueprint.route("/approve", methods=['post'])
 @admin_required
 def event_approve_post():
     form = ApproveForm(request.form)
     name = str(form.name.data)
 
-    if request.form['action'] == 'approve':
-        MongoDatabase.update_event_display(name)
-        flash("Event approved")
-    elif request.form['action'] == 'delete':
-        MongoDatabase.delete_event(name)
-        flash("Event deleted")
+    MongoDatabase.update_event_display(name)
+    flash("Event approved")
 
     return redirect(url_for('admin.event_approve_get'))
+
+
+@blueprint.route("/delete", methods=['post'])
+@admin_required
+def event_approve_delete_post():
+    form = ApproveForm(request.form)
+    name = str(form.name.data)
+
+    MongoDatabase.delete_event(name)
+    flash("Event deleted")
+
+    return redirect(url_for('admin.event_approve_get'))
+

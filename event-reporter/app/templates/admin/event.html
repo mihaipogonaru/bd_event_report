@@ -2,42 +2,46 @@
 {% from "macros/render_form.html" import render_field%}
 {% block outer_content %}
 <div class="mdl-grid">
-    <div class="mdl-layout-spacer"></div>
-    <div class="mdl-cell mdl-cell--4-col">
-        <center>
-        <h1><strong> ADMIN EVENT APPROVAL </strong></h1>
-        <br/>
-
-        <!-- TABEL -->
-        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-          <thead>
+<div class="mdl-cell mdl-cell--4-col"></div>
+<div class="mdl-cell mdl-cell--4-col">
+    <h1><strong> ADMIN EVENT APPROVAL </strong></h1>
+    <br/>
+    <!-- TABEL -->
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
             <tr>
-              <th class="mdl-data-table__cell--non-numeric">Event ID</th>
-              <th>Action</th>
+                <th class="mdl-data-table__cell--non-numeric">Event ID</th>
+                <th>Action</th>
             </tr>
-          </thead>
+        </thead>
 
-          <tbody>
-          {% for form in forms: %}
-
-            <form name={{form.get_name()}} class="form form-register" method="POST"  action="" role="form">
+    <tbody>
+    {% if not forms %}
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric"> No new events </td>
+        <td></td>
+    </tr>
+    {% endif %}
+    {% for form in forms %}
+        <tr>
+            <td class="mdl-data-table__cell--non-numeric"> {{form.get_name()}} </td>
+            <td>
+                <form name="adminEventForm" class="form form-register" method="POST" action="approve" role="form">
                 {{ form.hidden_tag() }}
-                <tr>
-                  <td class="mdl-data-table__cell--non-numeric"> {{form.get_name()}} </td>
-                  <td>
-<!--                      <input type="hidden"  name={{form.get_name()}}>-->
-                      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action" value="approve"> Approve </button>
-                  </td>
-                  <td>
-                      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action" value="delete"> Delete </button>
-                  </td>
-                </tr>
-            </form>
-           {% endfor %}
-          </tbody>
-        </table>
-        </center>
-    </div>
-    <div class="mdl-layout-spacer"></div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Approve </button>
+                </form>
+            </td>
+            <td>
+                <form name="adminEventForm" class="form form-register" method="POST" action="delete" role="form">
+                {{ form.hidden_tag() }}
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"> Delete </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div class="mdl-cell mdl-cell--4-col"></div>
 </div>
 {% endblock %}

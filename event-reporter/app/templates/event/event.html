@@ -1,49 +1,48 @@
 {% extends "layout.html" %}
-{% from "macros/render_form.html" import render_field, render_checkbox %}
 {% block outer_content %}
-    <style>
-        .demo-list-item {
-            width: 300px;
-        }
-    </style>
+<div class="mdl-grid">
+<div class="mdl-cell mdl-cell--4-col"></div>
+<div class="mdl-cell mdl-cell--4-col">
+    <ul class="demo-list-item mdl-list">
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <p><strong>{{ ev.get_name_formatted() }}</strong></p>
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <p><strong>Timestamp</strong>  {{ ev.timestamp }}</p>
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <p><strong>Latitude</strong> {{ ev.latitude }}</p>
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <p><strong>Longitude</strong> {{ ev.longitude }}</p>
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <p><strong>Alert code</strong> {{ ev.alert_code.name }}</p>
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <p><strong>Description</strong></p>
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                {{ ev.description }}
+            </span>
+        </li>
+    </ul>
 
-    <center>
-        <ul class="demo-list-item mdl-list">
-            <li class="mdl-list__item">
-<span class="mdl-list__item-primary-content">
-    <strong>Name</strong> - {{ ev.name }}
-</span>
-            </li>
-            <li class="mdl-list__item">
-<span class="mdl-list__item-primary-content">
-    <strong>Timestamp</strong> - {{ ev.timestamp }}
-</span>
-            </li>
-            <li class="mdl-list__item">
-<span class="mdl-list__item-primary-content">
-    <strong>Latitude</strong> - {{ ev.latitude }}
-</span>
-            </li>
-            <li class="mdl-list__item">
-<span class="mdl-list__item-primary-content">
-    <strong>Longitude</strong>  - {{ ev.longitude }}
-</span>
-            </li>
-            <li class="mdl-list__item">
-<span class="mdl-list__item-primary-content">
-    <strong>Alert code</strong> - {{ ev.alert_code }}
-</span>
-            </li>
-            <li class="mdl-list__item">
-<span class="mdl-list__item-primary-content">
-    <strong>Description</strong><br>
-    {{ ev.description }}
-</span>
-            </li>
-        </ul>
-
-        <img alt="No Image" src="{{ url_for('event.get_event_image', event=ev.name) }}"/>
-    </center>
-
+    <img alt="No Image" src="{{ url_for('event.get_event_image', event=ev.name) }}"/>
+</div>
+<div class="mdl-cell mdl-cell--4-col"></div>
+</div>
 {% endblock %}
-

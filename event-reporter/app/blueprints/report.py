@@ -35,7 +35,7 @@ def report_event_post():
         if ev.has_image():
             MongoDatabase.insert_photo(ev.get_image_name(), form.image.data)
 
-        msg = EvrMail.create_message(Config.ADMIN_EMAILS, ev)
+        msg = EvrMail.create_new_event_message(Config.ADMIN_EMAILS, ev)
         EvrMail.send_message(msg)
 
         flash('Event reported')

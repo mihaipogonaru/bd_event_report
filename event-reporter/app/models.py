@@ -54,6 +54,9 @@ class Event:
 
         return "{}.{}".format(self.name, self.image_extension)
 
+    def get_name_formatted(self):
+        return "{}! Time {}. Place: lat {} long {}".format(self.alert_code.name, self.timestamp, self.latitude, self.longitude)
+
     def is_visible(self):
         return self.display
 

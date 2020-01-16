@@ -216,9 +216,13 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 .mdl-layout__drawer {
   width: 400px;
-  left: -250px;
+  /*left: -250px;*/
 }
 
 .mdl-layout__drawer.is-visible {
   left: 0;
+}
+
+.demo-list-item {
+    width: 300px;
 }
