@@ -38,4 +38,3 @@ def event_approve_delete_post():
     flash("Event deleted")
 
     return redirect(url_for('admin.event_approve_get'))
-
