@@ -1,5 +1,43 @@
-{% for k, v in ev.to_document().items(): %}
-<p> {{ k }} - {{ v }} </p>
-{% endfor %}
+<style>
+        .demo-list-item {
+            width: 300px;
+        }
+    </style>
 
-<img alt="No Image" src="{{ url_for('event.get_event_image', event=ev.name) }}"/>
+    <center>
+        <ul class="demo-list-item mdl-list">
+            <li class="mdl-list__item">
+<span class="mdl-list__item-primary-content">
+    <strong>Name</strong> - {{ ev.name }}
+</span>
+            </li>
+            <li class="mdl-list__item">
+<span class="mdl-list__item-primary-content">
+    <strong>Timestamp</strong> - {{ ev.timestamp }}
+</span>
+            </li>
+            <li class="mdl-list__item">
+<span class="mdl-list__item-primary-content">
+    <strong>Latitude</strong> - {{ ev.latitude }}
+</span>
+            </li>
+            <li class="mdl-list__item">
+<span class="mdl-list__item-primary-content">
+    <strong>Longitude</strong>  - {{ ev.longitude }}
+</span>
+            </li>
+            <li class="mdl-list__item">
+<span class="mdl-list__item-primary-content">
+    <strong>Alert code</strong> - {{ ev.alert_code }}
+</span>
+            </li>
+            <li class="mdl-list__item">
+<span class="mdl-list__item-primary-content">
+    <strong>Description</strong><br>
+    {{ ev.description }}
+</span>
+            </li>
+        </ul>
+
+        <img alt="No Image" src="{{ url_for('event.get_event_image', event=ev.name) }}"/>
+    </center>

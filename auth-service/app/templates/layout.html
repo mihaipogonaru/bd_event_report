@@ -19,8 +19,8 @@
 <head>
     <meta charset="utf-8">
     <title>{% block page_title %}
-            Event Reporter
-           {% endblock %}
+        Event Reporter
+    {% endblock %}
     </title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,14 +33,18 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-orange.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='libs/font-awesome4/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js"></script>
+
     {% assets "css_all" %}
         <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
     {% block css %}{% endblock %}
     <style>
+
         #view-source {
             position: fixed;
             display: block;
@@ -50,34 +54,55 @@
             margin-bottom: 40px;
             z-index: 900;
         }
+
+        body {
+            background: linear-gradient(-45deg, #ffffff, #bfbfbd, #ffffff, #bfbfbd);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
     </style>
-    
+
+
 </head>
 <body id="gradient" class="{% block body_class %}sdob-body{% endblock %}">
+
 {% block body %}
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
         {% include "nav.html" %}
         {% include "drawer.html" %}
 
-        <div class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-layout__content">
             {% block outer_content %}
-            <div class="mdl-grid demo-content">
-                 <div class="mdl-layout-spacer"></div>
-                 <div class="mdl-cell mdl-cell--6-col">
-                     {% block content %}{% endblock %}
-                 </div>
-                 <div class="mdl-layout-spacer"></div>
-             </div>
+                <div class="mdl-grid demo-content">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-cell mdl-cell--6-col">
+                        {% block content %}{% endblock %}
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
             {% endblock %}
-            </div>
-        
+        </div>
+
     </div>
 
-   {% set errors = get_flashed_messages(category_filter=['error']) %}
-   <div class="mdl-js-snackbar mdl-snackbar">
-       <div class="mdl-snackbar__text {% if errors %}sdob-error-text{% endif %}" style="white-space: pre-line"></div>
-       <button class="mdl-snackbar__action" type="button"></button>
-   </div>
+    {% set errors = get_flashed_messages(category_filter=['error']) %}
+    <div class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text {% if errors %}sdob-error-text{% endif %}" style="white-space: pre-line"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
 
     <!-- JavaScript at the bottom for fast page loading -->
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -92,9 +117,9 @@
         {% set messages = '\\n'.join(get_flashed_messages()) %}
     {% endif %}
     {% if messages %}
-    <script type="text/javascript">
-        show_snackbar("{{ messages|safe }}");
-    </script>
+        <script type="text/javascript">
+            show_snackbar("{{ messages|safe }}");
+        </script>
     {% endif %}
     <!-- end scripts -->
 {% endblock %}
