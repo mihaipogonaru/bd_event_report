@@ -9,7 +9,7 @@ class EvrMail:
 
     @staticmethod
     def create_new_event_message(recipients, event):
-        msg = Message(subject='New event reported: {}'.format(event.name),
+        msg = Message(subject='New event reported: {}'.format(event.get_name_formatted()),
                       recipients=recipients)
 
         msg.html = render_template('mail/new_event.html', ev=event)
